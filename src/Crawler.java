@@ -26,6 +26,12 @@ public abstract class Crawler {
         this.rhymes = rhymes;
     }
 
+    public void run(){
+        readWordFile(source);
+        crawlAndExtract();
+    }
+
+
     public void readWordFile(String fileName) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -53,17 +59,22 @@ public abstract class Crawler {
             fetchRhymesOf(words.get(i));
 
             if(i%10==0){
-                writeRhymes();
-                writeRejects();
-                wordIPAs=new HashMap<String, String>();
-                rejects=new ArrayList<String>();
+                writeAll();
+                wordRhymes=new HashMap<String,ArrayList<String> >();
+                rejectEmpty=new ArrayList<String>();
+                rejectNull=new ArrayList<String>();
             }
 
         }
 
-        writeIPA();
-        writeRejects();
+        writeAll();
         System.gc();
+    }
+
+    private void writeAll() {
+        writeRhymes();
+        writeRejects(rejectedEmpty,rejectEmpty);
+        writeRejects(rejectedNull,rejectNull);
     }
 
 
@@ -86,4 +97,19 @@ public abstract class Crawler {
             // do something
         }
     }
+
+    private void writeRejects(String path, ArrayList<String> data){
+        try{
+            FileWriter fw = new FileWriter(path, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter writer = new PrintWriter(bw);
+            for (int i = 0; i <data.size() ; i++) {
+                writer.println(data.get(i));
+            }
+            writer.close();
+        } catch (IOException e) {
+            // do something
+        }
+    }
+
 }
