@@ -20,7 +20,7 @@ public class Main {
 
         Crawler c=null;
         if(machine.equalsIgnoreCase("Rhymer")) {
-            //c = new Rhymer(source, rejectedEmpty,rejectedNull,rhymes);
+            c = new Rhymer(source, rejectedEmpty,rejectedNull,rhymes);
         }
 
         if(c!=null) {

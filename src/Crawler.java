@@ -1,4 +1,6 @@
 import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,7 +10,7 @@ import java.util.HashMap;
 public abstract class Crawler {
 
     ArrayList<String> words=new ArrayList<String>();
-    HashMap<String,ArrayList<String>> wordRhymes=new HashMap<String, ArrayList<String>>();
+    HashMap<String,String> wordRhymes=new HashMap<String, String>();
     ArrayList<String> rejectEmpty=new ArrayList<String>(); //Page exists but only the word itself is given as rhymes. Element: word,syllables eg: merchandise,3
     ArrayList<String> rejectNull=new ArrayList<String>();  //Even the page does not exist OR Page exists but only the word itself is given as rhymes. Element: word eg: supercalifragilisticexpialidocious
 
@@ -17,6 +19,14 @@ public abstract class Crawler {
     String rejectedEmpty="";
     String rejectedNull="";
     String rhymes="";
+
+
+    //Variables for "fetchRhymesOf"
+    URL url=null;
+    URLConnection spoof=null;
+    BufferedReader in=null;
+    String strLine = "";
+    boolean added=false;
 
 
     public Crawler(String source, String rejectedEmpty, String rejectedNull, String rhymes) {
@@ -60,7 +70,7 @@ public abstract class Crawler {
 
             if(i%10==0){
                 writeAll();
-                wordRhymes=new HashMap<String,ArrayList<String> >();
+                wordRhymes=new HashMap<String,String >();
                 rejectEmpty=new ArrayList<String>();
                 rejectNull=new ArrayList<String>();
             }
@@ -85,11 +95,11 @@ public abstract class Crawler {
             FileWriter fw = new FileWriter(rhymes, true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter writer = new PrintWriter(bw);
-            ArrayList<String>wordRhyme=null;
+            String wordRhyme=null;
             for (int i = 0; i <words.size() ; i++) {
                 wordRhyme=wordRhymes.get(words.get(i));
                 if(wordRhyme!=null){
-                    writer.println(words.get(i)+":"+String.join(";",wordRhyme));
+                    writer.println(words.get(i)+":"+wordRhyme);
                 }
             }
             writer.close();
