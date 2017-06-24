@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="02_RhymeCreator:jar">
+    <output-path>$PROJECT_DIR$/</output-path>
+    <root id="archive" name="02_RhymeCreator.jar">
+      <element id="module-output" name="02_RhymeCreator" />
+    </root>
+  </artifact>
+</component>
