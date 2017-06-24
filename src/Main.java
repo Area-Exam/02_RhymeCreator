@@ -2,20 +2,22 @@ public class Main {
 
     public static void main(String[] args) {
 
-
-        String source="../Output/words.txt";
-        String rejectedEmpty="../Output/rejectWordsEmpty.txt";
-        String rejectedNull="../Output/rejectWordsEmpty.txt";
-        String rhymes="../Output/rhymes.txt";
+        String path="../Output/02_Rhyme/";
         String machine="Rhymer";
+        String source=path+"words.txt";
+        String rejectedEmpty=path+"rejectWordsEmpty_"+machine+".txt";
+        String rejectedNull=path+"rejectWordsNull_"+machine+".txt";
+        String rhymes=path+"rhymes_"+machine+".txt";
 
+        // Rhymer "../Output/02_Rhyme/" "../Output/02_Rhyme/words.txt"
 
         if(args.length>0) {
             machine = args[0];
-            source = args[1];
-            rejectedEmpty = args[2];
-            rejectedNull = args[3];
-            rhymes = args[4];
+            path = args[1];
+            source = args[2];
+            rejectedEmpty=path+"rejectWordsEmpty_"+machine+".txt";
+            rejectedNull=path+"rejectWordsNull_"+machine+".txt";
+            rhymes=path+"rhymes_"+machine+".txt";
         }
 
         Crawler c=null;

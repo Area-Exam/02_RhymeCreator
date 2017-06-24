@@ -17,7 +17,7 @@ public class Rhymer extends Crawler {
     public void fetchRhymesOf(String word) {
         added=false;
 
-       // word="supercalifragilisticexpialidocious"; //apple merchandise, supercalifragilisticexpialidocious
+      //  word="achilles"; //apple merchandise, supercalifragilisticexpialidocious, achilles
        // System.out.println(word);
 
 
@@ -37,7 +37,11 @@ public class Rhymer extends Crawler {
 
                 if(strLine.contains("syllables")) {
                     syllables=strLine.substring(strLine.indexOf(">")+1,strLine.indexOf("s")-1);
-                   // System.out.println(syllables);
+               //     System.out.println(syllables);
+
+                    if(syllables.contains("more")){  //It has "4 or more". :-(
+                        syllables="4+";
+                    }
 
                     strLine = in.readLine();
                     String[] parts=strLine.split("</a>");
@@ -45,12 +49,12 @@ public class Rhymer extends Crawler {
                         if(parts[i].contains("<a")) {
                             parts[i]=parts[i].substring(parts[i].indexOf(">")+1,parts[i].length());
                             if(parts[i].equalsIgnoreCase(word)){
-                                key=":"+syllables+":";
+                                key=syllables+":";
                             }
                             else{
                                 rhymWords.add(parts[i]+","+syllables);
                             }
-                          //  System.out.println(parts[i]);
+                     //       System.out.println(parts[i]);
                         }
                     }
 
@@ -67,11 +71,11 @@ public class Rhymer extends Crawler {
 
 
                     added=true;
-                    break;
+
                 }
 
             }
-         //      System.exit(0);
+             //  System.exit(0);
 
         }
         catch(Exception e){
