@@ -8,6 +8,8 @@ import java.util.ArrayList;
  */
 public class Rhymer extends Crawler {
 
+    // Rhymer "../Output/02_Rhyme/" "../Output/02_Rhyme/words.txt"
+
 
     public Rhymer(String source, String rejectedEmpty, String rejectedNull, String rhymes) {
         super(source, rejectedEmpty, rejectedNull, rhymes);
