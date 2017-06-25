@@ -16,8 +16,12 @@ public class RhymeZone extends Crawler {
 
     @Override
     public void fetchRhymesOf(String word) {
-        System.out.println(word);
+
+       // word="seller"; //"super"; //"carrot";
+
+      //  System.out.println(word);
         added=false;
+
 
         try {
             url = new URL("http://www.rhymezone.com/r/rhyme.cgi?Word="+word+"&typeofrhyme=perfect&org1=syl&org2=l&org3=y"); //apple
@@ -28,13 +32,46 @@ public class RhymeZone extends Crawler {
             in = new BufferedReader(new InputStreamReader(spoof.getInputStream()));
             strLine = "";
             String syllables="";
-            String key="";
+            String key="X:";
             ArrayList<String> rhymWords=new ArrayList<String>();
 
             while ((strLine = in.readLine()) != null) {
-                System.out.println(strLine);
+
+                if(strLine.contains("syllable")) {
+                    syllables=strLine.substring(strLine.indexOf(">")+1,strLine.indexOf("s")-1);
+
+                   // System.out.println(syllables);
+
+                    while ((strLine = in.readLine()) != null && !strLine.contains("<br>")) {
+                        if(strLine.contains("<b>")) {
+                            strLine=strLine.substring(strLine.indexOf("\">"),strLine.indexOf("/"));
+                            strLine=strLine.substring(strLine.indexOf(">")+1,strLine.indexOf("<"));
+                            if(!strLine.contains("&nbsp;")) { //Get rid of multi-word ones
+                                ///System.out.println(strLine+","+syllables);
+
+                                rhymWords.add(strLine+","+syllables);
+                            }
+                        }
+                    }
+                }
+
+              //  if(strLine.contains("almost rhyme")){  //Getting rid of almost rhymes
+                //    break;
+              //  }
+
             }
-              System.exit(0);
+
+            if(rhymWords.size()>0){
+                wordRhymes.put(word,key+String.join(";",rhymWords));
+            }
+            else{
+                rejectEmpty.add(word+",X");
+                rejectNull.add(word);
+            }
+
+            added=true;
+
+          //    System.exit(0);
 
         }
         catch(Exception e){
