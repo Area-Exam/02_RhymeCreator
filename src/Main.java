@@ -24,6 +24,9 @@ public class Main {
         if(machine.equalsIgnoreCase("Rhymer")) {
             c = new Rhymer(source, rejectedEmpty,rejectedNull,rhymes);
         }
+        else if(machine.equalsIgnoreCase("RhymeZone")) {
+            c = new RhymeZone(source, rejectedEmpty,rejectedNull,rhymes);
+        }
 
         if(c!=null) {
             c.run();
